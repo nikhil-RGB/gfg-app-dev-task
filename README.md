@@ -5,7 +5,7 @@ This repository has been created for the app development task of geeks for geeks
 ==><strong>Mandatory task:-</strong><br>
 Run any C/C++/Java/Python code (except basic hello world/adding number etc. programs). Be as creative as possible with the program you choose. Create a GitHub repository<br>
 with the code and a documentation file of the code (explain your code in it).<br>
-<strong>Work for this task is available <link href="https://github.com/nikhil-RGB/Shuffle-Cipher-Desktop">here</link><br>
+<strong>Work for this task is available [here](https://github.com/nikhil-RGB/Shuffle-Cipher-Desktop)<br>
 <br><br>
 ==><strong> App Dev Task :- </strong><br>
 Develop a static World time app. <br>You can also add an API of your choice to make it dynamic.<br>
