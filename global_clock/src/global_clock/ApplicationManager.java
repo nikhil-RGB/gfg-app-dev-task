@@ -57,13 +57,24 @@ public class ApplicationManager extends JFrame
 		
 		//initialize parent container
 		this.panel=new ImagePanel(ApplicationManager.universal_icon);
-	    this.panel.add(timer);	
+	    this.panel.add(timer);
+	    this.initMenu();	    
 		
 	}
 	//method to initialize menu bar and menu options
 	public void initMenu()
 	{
-		
+		JMenuBar jmb=new JMenuBar();
+		JMenu changeLoc=new JMenu("Change Locale/Timezone");
+		JMenuItem change=new JMenuItem("Access and Select Timezone of choice");
+		change.addActionListener((ev)->{
+		String selection=(String)(JOptionPane.showInputDialog(null, "Select new Time zone","Time Zone switch", JOptionPane.QUESTION_MESSAGE, null, timezones, currentZone));
+	    currentZone=((selection==null)||(selection.isEmpty()))?currentZone:ZoneId.of(selection);    	
+		timer.setText(refreshedTime());
+		});
+		changeLoc.add(change);
+		jmb.add(changeLoc);
+		this.setJMenuBar(jmb);
 	}
 	
   //This method formats the time before it will be displayed
@@ -94,7 +105,7 @@ public class ApplicationManager extends JFrame
 		SwingUtilities.invokeLater(()->{
 	 	final ApplicationManager am=new ApplicationManager("Global Clock");
 	 	am.add(am.panel);
-	 	am.setSize(new Dimension(350,300));
+	 	am.setSize(new Dimension(850,450));
 	 	am.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	 	am.setResizable(false);
 	 	am.setVisible(true);
