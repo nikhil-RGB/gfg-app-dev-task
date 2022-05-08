@@ -4,11 +4,13 @@
 # Log file
 *.log
 #extras:
+.project
 .metadata/
 bin/
-.project
+*.png
+.classpath
 .settings/
-*.background
+
 
 # BlueJ files
 *.ctxt
