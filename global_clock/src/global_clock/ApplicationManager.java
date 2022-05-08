@@ -1,5 +1,7 @@
 package global_clock;
 import javax.swing.*;
+import javax.swing.Timer;
+
 import java.util.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -14,10 +16,10 @@ public class ApplicationManager extends JFrame
 	
 	private static final long serialVersionUID=1002003L;
 	//format for time displaying label
-	private static final String DATE_FORMATTER= "HH:mm yyyy-MM-dd"; 
+	private static final String DATE_FORMATTER= "HH:mm:ss yyyy-MM-dd"; 
 	//label used for showing current date and time
-	private JLabel timer;
-	private ZoneId currentZone;
+	private volatile JLabel timer;
+	private volatile ZoneId currentZone;
 	//filepath for icon background of timer panel
 	private static String universal_icon;
 	//Timer-containing panel
@@ -44,10 +46,11 @@ public class ApplicationManager extends JFrame
 		
 		this.currentZone=ZoneId.systemDefault();
 		//initialize JLabel with default LocalDateTime value initially
-		ZonedDateTime current_time=ZonedDateTime.now(this.currentZone);
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ApplicationManager.DATE_FORMATTER);
-		String formatted=ApplicationManager.timeFormat(current_time.format(formatter)+" "+this.currentZone);
+		//ZonedDateTime current_time=ZonedDateTime.now(this.currentZone);
+		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ApplicationManager.DATE_FORMATTER);
+		//String formatted=ApplicationManager.timeFormat(current_time.format(formatter)+" "+this.currentZone);
 		//System.out.println(formatted);
+	    String formatted=this.refreshedTime();
 		this.timer=new JLabel(formatted);
 		this.timer.setBorder(border);
 		this.timer.setFont(font);
@@ -76,18 +79,35 @@ public class ApplicationManager extends JFrame
       return formatted;	  
 	}
 	
+	//This code returns the current time for the specefic zone in String format
+	public String refreshedTime()
+	{
+		ZonedDateTime current_time=ZonedDateTime.now(this.currentZone);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ApplicationManager.DATE_FORMATTER);
+		String formatted=ApplicationManager.timeFormat(current_time.format(formatter)+" "+this.currentZone);
+		
+		return formatted;
+	}
 	//main method for controlling application execution
 	public static void main(String[] args)
 	{
 		SwingUtilities.invokeLater(()->{
-	 	ApplicationManager am=new ApplicationManager("Global Clock");
+	 	final ApplicationManager am=new ApplicationManager("Global Clock");
 	 	am.add(am.panel);
 	 	am.setSize(new Dimension(350,300));
 	 	am.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	 	am.setResizable(false);
 	 	am.setVisible(true);
+	 	ActionListener updatetimer=(ae)->
+	 	{
+	 		String refreshed=am.refreshedTime();
+	 		am.timer.setText(refreshed);
+	 	};
+	 	Timer th=new Timer(1000,updatetimer);
+	 	th.start();
 		});
      
 	}
+	
 
 }
