@@ -2,13 +2,15 @@ package global_clock;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
+import java.net.URL;
  public class ImagePanel extends JPanel
  {
    private static final long serialVersionUID=2L;
-   Image icon;
-   public ImagePanel(String path)
+   ImageIcon icon;
+   public ImagePanel(URL path)
    {
-	   this.icon=new ImageIcon(path).getImage();
+	   this.icon=new ImageIcon(path);
+	   //this.icon=new ImageIcon(getClass().getResource(path));
    }
    @Override
    public void paintComponent(Graphics g)
@@ -16,7 +18,7 @@ import java.awt.*;
 	   super.paintComponent(g);
 	   if(this.icon!=null)
 	   {
-		   g.drawImage(this.icon,0,0,this.getWidth()+1,this.getHeight()+1,null);
+		   g.drawImage(this.icon.getImage(),0,0,this.getWidth()+1,this.getHeight()+1,null);
 	   }
    }
 	 

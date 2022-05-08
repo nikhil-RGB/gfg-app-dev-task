@@ -6,6 +6,8 @@ import java.util.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 //An object of this class controls a single instance of the Global clock app
@@ -21,7 +23,7 @@ public class ApplicationManager extends JFrame
 	private volatile JLabel timer;
 	private volatile ZoneId currentZone;
 	//filepath for icon background of timer panel
-	private static String universal_icon;
+	private static URL universal_icon;
 	//Timer-containing panel
 	private ImagePanel panel;
 	//default font used for all text in-app
@@ -34,7 +36,15 @@ public class ApplicationManager extends JFrame
 	//static initialization block for all static-level initializations
 	static
 	{
-		ApplicationManager.universal_icon="background.png";
+		try {
+			ApplicationManager.universal_icon=new URL("https://wallpaperaccess.com/full/1783294.jpg");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Unable to load background", "Background texture cannot load without internet!\n Please connect to the internet for an optimal experience", JOptionPane.ERROR_MESSAGE, null);
+		}
+		if(ApplicationManager.universal_icon==null)
+		{
+			JOptionPane.showMessageDialog(null, "Unable to load background", "Background texture cannot load without internet!\n Please connect to the internet for an optimal experience", JOptionPane.ERROR_MESSAGE, null);
+		}
 		ApplicationManager.font=new Font("SansSerif",Font.PLAIN,28);
 		ApplicationManager.border=new RoundedBorder(12);
 		ApplicationManager.timezones=TimeZone.getAvailableIDs();
