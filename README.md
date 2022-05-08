@@ -4,5 +4,5 @@ This repository has been created for the app development task of geeks for geeks
 <br>
 ==><strong> App Dev Task :- </strong><br>
 Develop a static World time app. <br>You can also add an API of your choice to make it dynamic.<br>
-<strong>Work for this task is available to view and download in this repository itself.</strong>
+<strong>If you'd like to test the app, please check out the releases section!.</strong>
 
