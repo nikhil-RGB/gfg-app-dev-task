@@ -1,6 +1,5 @@
 package global_clock;
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
 import java.net.URL;
  public class ImagePanel extends JPanel

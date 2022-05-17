@@ -1,12 +1,11 @@
 package global_clock;
 import javax.swing.*;
 import javax.swing.Timer;
-
 import java.util.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
-import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -15,6 +14,11 @@ import java.time.format.DateTimeFormatter;
 //@purpose:geeks for geeks technical testing round
 public class ApplicationManager extends JFrame
 {
+	//links
+	private static final String WORK="https://github.com/nikhil-RGB";
+	private static final String ABOUT="https://linktr.ee/nikhil_n67";
+	private static final String CONTACT="javakingxi@gmail.com";
+	//links
 	
 	private static final long serialVersionUID=1002003L;
 	//format for time displaying label
@@ -84,6 +88,10 @@ public class ApplicationManager extends JFrame
 		});
 		changeLoc.add(change);
 		jmb.add(changeLoc);
+		//info menu initialization
+	 	JMenu toAdd=ApplicationManager.prepareInfoMenu();
+	 	//end
+	 	jmb.add(toAdd);
 		this.setJMenuBar(jmb);
 	}
 	
@@ -130,5 +138,46 @@ public class ApplicationManager extends JFrame
      
 	}
 	
-
+	//This method prepares the More Info Menu
+    private static JMenu prepareInfoMenu()
+    {
+      JMenu info=new JMenu("More Information");
+      JMenuItem about=new JMenuItem("About developer");
+      JMenuItem more=new JMenuItem("More from this developer");
+      JMenuItem contact=new JMenuItem("Contact developer");
+      ActionListener ar=(ev)->
+      {
+    	  try
+    	  {
+    	  Desktop dt=Desktop.getDesktop();
+    	  JMenuItem src=(JMenuItem)(ev.getSource());
+    	  URI link=(src==about)?new URI(ApplicationManager.ABOUT):new URI(ApplicationManager.WORK);
+    	  if((src==about)||(src==more))
+    	  {
+    		dt.browse(link);
+		  }
+    	  else if(src==contact)
+    	  {
+    		link=new URI("mailto:"+ApplicationManager.CONTACT);  
+    		dt.mail(link);
+    	  }
+    	  
+    	  }
+    	  catch(Throwable obj)
+    	  {
+    		  JOptionPane.showMessageDialog(null, "Failed to carry out operation!","Oops!", JOptionPane.ERROR_MESSAGE, null);
+    	  }
+      };
+      //event listeners
+      about.addActionListener(ar);
+      more.addActionListener(ar);
+      contact.addActionListener(ar);
+      //menu options
+      info.add(more);
+      info.add(about);
+      info.add(contact);
+      
+      
+      return info;	
+    }
 }
